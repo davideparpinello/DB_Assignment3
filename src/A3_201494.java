@@ -1,6 +1,8 @@
 import java.sql.*;
 import java.util.*;
 
+// Made by Davide Parpinello 201494
+
 public class A3_201494 {
 
     private static final String ALPHA_NUMERIC_STRING = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -15,11 +17,10 @@ public class A3_201494 {
 
 
     public static void main(String[] args) throws SQLException {
-
         // Connection to the database
-        String url = "jdbc:postgresql://127.0.0.1/a3";
+        String url = "jdbc:postgresql://sci-didattica.unitn.it/";
         Properties props = new Properties();
-        props.setProperty("user", "postgres");
+        props.setProperty("user", "");
         props.setProperty("password", "");
         props.setProperty("ssl", "false");
         Connection conn = DriverManager.getConnection(url, props);
@@ -88,26 +89,6 @@ public class A3_201494 {
         }
         List<Integer> v_ids = new ArrayList<Integer>(ids);
 
-        /*List<Integer> v_id = new ArrayList<Integer>();
-        for (int i = 1; i < 1000000; i++) {
-            v_id.add(i);
-        }
-
-        List<String> v_name = new ArrayList<String>();
-        for (int i = 1; i < 1000000; i++) {
-            v_name.add("Prof"+i);
-        }
-
-        List<String> v_addr = new ArrayList<String>();
-        for (int i = 1; i < 1000000; i++) {
-            v_addr.add("AddrProf"+i);
-        }
-
-        List<Integer> v_age = new ArrayList<Integer>();
-        for (int i = 1; i < 1000000; i++) {
-            v_age.add((int)(Math.random() * ((65 - 23) + 1)) + 23);
-        }
-        */
         int count = 0;
         String q = "INSERT INTO \"Professor\"(id, name, address, age, height) VALUES(?,?,?,?,?)";
         PreparedStatement prepSt = conn.prepareStatement(q);
@@ -120,7 +101,7 @@ public class A3_201494 {
 
             prepSt.addBatch();
             count++;
-            if (count % 100 == 0 || count == heights.size()) {
+            if (count % 10000 == 0 || count == heights.size()) {
                 prepSt.executeBatch();
             }
         }
@@ -164,7 +145,7 @@ public class A3_201494 {
 
             prepSt.addBatch();
             count++;
-            if (count % 100 == 0 || count == 1000000) {
+            if (count % 10000 == 0 || count == 1000000) {
                 prepSt.executeBatch();
             }
         }
@@ -254,8 +235,6 @@ public class A3_201494 {
 
         st.close();
         conn.close();
-
-
     }
 }
 
